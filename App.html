@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Riddle Generator App</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9; /* Clean, light background */
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #4CAF50; /* Green accent color */
+            margin-bottom: 25px;
+        }
+
+        #riddle-display {
+            font-size: 1.2em;
+            margin: 20px 0;
+            min-height: 50px; /* Ensures space even when empty */
+            font-style: italic;
+        }
+
+        #answer-display {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e91e63; /* Pink accent for the answer */
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #generate-btn {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        #generate-btn:hover {
+            background-color: #45a049;
+        }
+
+        #show-answer-btn {
+            background-color: #00bcd4; /* Cyan color */
+            color: white;
+        }
+
+        #show-answer-btn:hover {
+            background-color: #00acc1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>The Riddle Generator</h1>
+
+        <div id="riddle-display">Click 'Generate New Riddle' to begin!</div>
+        <div id="answer-display" style="display: none;"></div>
+
+        <button id="generate-btn" class="btn">Generate New Riddle</button>
+        <button id="show-answer-btn" class="btn" style="display: none;">Show Answer</button>
+
+        <p class="mt-4">
+            <a href="index.html" style="color: #6c757d; text-decoration: none; font-size: 0.9em; margin-top: 20px; display: block;">&larr; Back to Scratch Page</a>
+        </p>
+    </div>
+
+    <script>
+        // Array of riddles and their answers (5+ riddles required)
+        const riddles = [
+            { riddle: "I am always hungry, I must always be fed, the finger I touch, will soon turn red. What am I?", answer: "Fire" },
+            { riddle: "What has cities, but no houses; forests, but no trees; and water, but no fish?", answer: "A map" },
+            { riddle: "What is full of holes but still holds water?", answer: "A sponge" },
+            { riddle: "What question can you never answer yes to?", answer: "Are you asleep yet?" },
+            { riddle: "I have keys, but open no doors. I have a space, but no room. You can enter, but can’t go outside. What am I?", answer: "A keyboard" },
+            { riddle: "What has an eye but cannot see?", answer: "A needle" }
+        ];
+
+        let currentRiddle = null;
+
+        const riddleDisplay = document.getElementById('riddle-display');
+        const answerDisplay = document.getElementById('answer-display');
+        const generateBtn = document.getElementById('generate-btn');
+        const showAnswerBtn = document.getElementById('show-answer-btn');
+
+        function generateRiddle() {
+            // Select a random riddle that is not the current one (if possible)
+            let newRiddle;
+            do {
+                const randomIndex = Math.floor(Math.random() * riddles.length);
+                newRiddle = riddles[randomIndex];
+            } while (newRiddle === currentRiddle && riddles.length > 1);
+            
+            currentRiddle = newRiddle;
+
+            riddleDisplay.textContent = currentRiddle.riddle;
+            answerDisplay.style.display = 'none';
+            showAnswerBtn.style.display = 'inline-block';
+        }
+
+        function showAnswer() {
+            if (currentRiddle) {
+                answerDisplay.textContent = `Answer: ${currentRiddle.answer}`;
+                answerDisplay.style.display = 'block';
+                showAnswerBtn.style.display = 'none';
+            }
+        }
+
+        // Event Listeners
+        generateBtn.addEventListener('click', generateRiddle);
+        showAnswerBtn.addEventListener('click', showAnswer);
+
+        // Initialize with a riddle on load
+        generateRiddle(); 
+    </script>
+
+    <p style="text-align: center;"></p>
+      <a href="index.html" class="nav-link-style">Back to Homepage</a>
+    </p>
+
+</body>
+</html>
